@@ -1,0 +1,29 @@
+# このファイルがプロジェクトのルートであることを示す
+# これより上位の階層にある .editorconfig ファイルは無視される
+root = true
+
+# すべてのファイルに適用される共通設定
+[*]
+end_of_line = crlf
+insert_final_newline = true
+charset = utf-8
+trim_trailing_whitespace = true
+
+# C# ファイル (.cs) に適用される設定
+[*.cs]
+# インデントスタイル: スペースを使用し、サイズは4
+indent_style = space
+indent_size = 4
+
+# using ディレクティブの配置ルール
+# using を名前空間の外側に配置する
+csharp_using_directive_placement = outside_namespace:suggestion
+dotnet_sort_system_directives_first = false
+
+# varキーワードの使用を推奨するスタイル
+csharp_style_var_for_built_in_types = true:suggestion
+csharp_style_var_when_type_is_apparent = true:suggestion
+csharp_style_var_elsewhere = false:suggestion
+
+# 未使用の using ディレクティブの重要度を情報(info)レベルにする
+dotnet_diagnostic.IDE0005.severity = info
