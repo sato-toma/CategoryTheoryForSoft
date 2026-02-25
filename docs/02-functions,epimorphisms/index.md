@@ -61,3 +61,26 @@ public static int? SafeDivide(int a, int b)
     return a / b;
 }
 ```
+
+---
+
+## WIP補足: 関係 (Relation) と関数の厳密な定義
+
+- **関係 (Relation)**: 2 つの集合の要素同士の関係は、直積 (Cartesian product) の部分集合として定義できます。
+    つまり、関係 R は $S_1\times S_2$ の部分集合で、要素はペア $(a,b)$ です。
+- **直積 (Cartesian product)**: $S_1\times S_2=\{(a,b)\mid a\in S_1,\;b\in S_2\}$。
+- **関数 (Function)**: 関係のうち、各入力 $a\in S_1$ に対して対応する出力が「高々1つ」だけ存在するものを関数と呼びます（これが関数の functional property）。
+    - もしある $a$ に複数の $b\in S_2$ が対応するなら、それは関数ではありません（単なる関係です）。
+- **全域関数 (Total function)**: さらに各 $a\in S_1$ にちょうど1つの像が存在する場合を全域関数と呼びます（定義域のすべてに定義される）。
+    - これに対して、ある入力に像が存在しないことを許すと部分関数 (Partial function) になります。
+- **Domain / Codomain / Image**:
+    - Domain: 出発集合（例: $S_1$）。
+    - Codomain: 目標集合（例: $S_2$）。
+    - Image (像): 実際に現れる値の集合 $\mathrm{Im}(f)=\{f(a)\mid a\in S_1\}\subseteq S_2$。
+- **逆写像と合成**:
+    - $f:A\to B$ に対して $g:B\to A$ が逆写像であるためには、両方の合成が恒等写像になる必要があります:
+        $g\circ f=\mathrm{id}_A$ かつ $f\circ g=\mathrm{id}_B$。
+    - 片側だけ成り立つ場合は左逆（$g\circ f=\mathrm{id}_A$）や右逆（$f\circ g=\mathrm{id}_B$）と呼び、左逆があると injective、右逆があると surjective になります。
+- **同型 (Isomorphism)**: 集合圏では、逆写像が存在する（双方向の合成が恒等写像になる）写像は双射（bijection）であり、同型と呼ばれます。
+
+上の違い（関係 ⇄ 関数、部分関数 ⇄ 全域関数、逆写像の片側だけの性質）は圏論やプログラミングで扱う際に重要な直感と厳密性を与えます。
