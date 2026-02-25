@@ -1,4 +1,4 @@
-﻿// SharedMutableStateDataRaceTest.cs
+﻿using System;
 using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
@@ -45,7 +45,7 @@ namespace DataRaceDemo
         }
 
         [Fact]
-        public void IncrementingSharedMutableState_CausesDataRace()
+        public async Task IncrementingSharedMutableState_CausesDataRace()
         {
             // --- 準備 (Arrange) ---
 
@@ -74,7 +74,7 @@ namespace DataRaceDemo
             }
 
             // すべてのタスクが完了するのを待つ
-            Task.WhenAll(tasks).Wait();
+            await Task.WhenAll(tasks);
 
             // --- 検証 (Assert) ---
             var actual = counter.Value;

@@ -26,4 +26,4 @@ csharp_style_var_when_type_is_apparent = true:suggestion
 csharp_style_var_elsewhere = false:suggestion
 
 # 未使用の using ディレクティブの重要度を情報(info)レベルにする
-dotnet_diagnostic.IDE0005.severity = info
+dotnet_diagnostic.IDE0005.severity = suggestion
