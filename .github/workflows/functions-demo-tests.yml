@@ -1,0 +1,31 @@
+name: FunctionsDemo Tests
+
+on:
+  push:
+    paths:
+      - 'docs/02-functions,epimorphisms/FunctionsDemo/**'
+  pull_request:
+    paths:
+      - 'docs/02-functions,epimorphisms/FunctionsDemo/**'
+
+jobs:
+  build-and-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        dotnet-version: [ '10.0.x' ]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: Restore
+        run: dotnet restore docs/02-functions,epimorphisms/FunctionsDemo/FunctionsDemo.csproj
+
+      - name: Run tests
+        run: |
+          dotnet test docs/02-functions,epimorphisms/FunctionsDemo/FunctionsDemo.csproj --no-build --verbosity normal
