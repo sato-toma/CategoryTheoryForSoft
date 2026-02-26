@@ -1,0 +1,31 @@
+name: DataRaceDemo Tests
+
+on:
+  push:
+    paths:
+      - 'docs/00-object-oriented-programming/DataRaceDemo/**'
+  pull_request:
+    paths:
+      - 'docs/00-object-oriented-programming/DataRaceDemo/**'
+
+jobs:
+  build-and-test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        dotnet-version: [ '10.0.x' ]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+
+      - name: Restore
+        run: dotnet restore docs/00-object-oriented-programming/DataRaceDemo/DataRaceDemo.csproj
+
+      - name: Run tests
+        run: |
+          dotnet test docs/00-object-oriented-programming/DataRaceDemo/DataRaceDemo.csproj --no-build --verbosity normal
