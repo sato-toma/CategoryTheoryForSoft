@@ -71,6 +71,23 @@ public static int? SafeDivide(int a, int b)
 - **直積 (Cartesian product)**: $S_1\times S_2=\{(a,b)\mid a\in S_1,\;b\in S_2\}$。
 - **関数 (Function)**: 関係のうち、各入力 $a\in S_1$ に対して対応する出力が「高々1つ」だけ存在するものを関数と呼びます（これが関数の functional property）。
     - もしある $a$ に複数の $b\in S_2$ が対応するなら、それは関数ではありません（単なる関係です）。
+        ```mermaid
+        ---
+        config:
+        layout: elk
+        look: handDrawn
+        ---
+        graph LR
+            subgraph S1["集合 S₁"]
+                a1["a"]
+            end
+            subgraph S2["集合 S₂"]
+                x1["x"]
+                y1["y"]
+            end
+            a1 --> x1
+            a1 --> y1
+        ```
 - **全域関数 (Total function)**: さらに各 $a\in S_1$ にちょうど1つの像が存在する場合を全域関数と呼びます（定義域のすべてに定義される）。
     - これに対して、ある入力に像が存在しないことを許すと部分関数 (Partial function) になります。
 - **Domain / Codomain / Image**:
@@ -84,3 +101,38 @@ public static int? SafeDivide(int a, int b)
 - **同型 (Isomorphism)**: 集合圏では、逆写像が存在する（双方向の合成が恒等写像になる）写像は双射（bijection）であり、同型と呼ばれます。
 
 上の違い（関係 ⇄ 関数、部分関数 ⇄ 全域関数、逆写像の片側だけの性質）は圏論やプログラミングで扱う際に重要な直感と厳密性を与えます。
+
+### 関数の可視化例
+
+以下の図は、関数 $f: S_1 \to S_2$ が関係（点と矢印）としてどのように機能するかを示しています。
+
+```mermaid
+---
+config:
+  layout: elk
+  look: handDrawn
+---
+graph LR
+    subgraph S1["集合 S₁<br/>(Domain)"]
+        a1["a"]
+    end
+
+    subgraph S2["集合 S₂<br/>(Codomain)"]
+        b1["x<br/>(Image)"]
+    end
+
+    a1 -->|f| b1
+    b1 -->|g| a1
+
+    a1 -.->|id_S1| a1
+    b1 -.->|id_S2| b1
+
+
+```
+
+**図の説明:**
+- **S₁**: Domain（定義域）。要素 aを含む集合。関数fの定義域であり、関数gの余域でもある。
+- **S₂**: Codomain（余域）。要素 x を含む集合。関数fの余域であり、関数gの定義域でもある。
+- **実線矢印**: 関数 $f$ による対応。各 $a \in S_1$ は高々1つの像 $f(a) \in S_2$ を持つ（functional property）。矢印の先端がImage要素に到達していることに注目。
+- **実線矢印**: 関数 $g$ による対応。各 $x \in S_2$ は高々1つの像 $g(x) \in S_1$ を持つ（functional property）。矢印の先端がImage要素に到達していることに注目。
+- **点線矢印**: 恒等写像 $\mathrm{id}$。各要素が自分自身に対応する射。
