@@ -136,3 +136,334 @@ graph LR
 - **実線矢印**: 関数 $f$ による対応。各 $a \in S_1$ は高々1つの像 $f(a) \in S_2$ を持つ（functional property）。矢印の先端がImage要素に到達していることに注目。
 - **実線矢印**: 関数 $g$ による対応。各 $x \in S_2$ は高々1つの像 $g(x) \in S_1$ を持つ（functional property）。矢印の先端がImage要素に到達していることに注目。
 - **点線矢印**: 恒等写像 $\mathrm{id}$。各要素が自分自身に対応する射。
+
+🔴 なぜ一般に inverse（逆写像）は存在しないのか
+
+関数𝑓:𝑆1→𝑆2が invertible（可逆） になるには、
+
+∃𝑔:𝑆2→𝑆1s.t.𝑔∘𝑓=𝑖𝑑𝑆1 and𝑓∘𝑔=𝑖𝑑𝑆2
+が必要である。
+しかし一般には成立しない。
+
+① collapse が起きる場合（非単射）
+● 定義
+
+異なる要素が同じ値に写る：
+
+𝑥1≠𝑥2だが𝑓(𝑥1)=𝑓(𝑥2)
+
+このとき情報が潰れている。
+
+例：isEven
+𝑖𝑠𝐸𝑣𝑒𝑛:𝑍→{𝑡𝑟𝑢𝑒,𝑓𝑎𝑙𝑠𝑒}
+- 2 → true
+- 4 → true
+- 6 → true
+
+複数の整数が同じ値に写る。
+
+→ どの整数だったか復元できない。
+
+したがって逆写像は存在しない。
+
+● これが起きない条件
+injective（単射）
+𝑓(𝑥1)=𝑓(𝑥2)⇒𝑥1=𝑥2
+同じ像なら元も同じ。
+
+これを injection と呼ぶ。
+
+② 像が codomain を覆わない場合（非全射）
+● 状況
+Im(𝑓)⊊𝑆2
+
+S₂ に「到達しない要素」がある。
+
+問題
+
+逆写像
+
+𝑔:𝑆2→𝑆1
+
+を定義しようとしても、
+
+𝑦∈𝑆2∖Im(𝑓)
+に対して
+
+𝑔(𝑦)
+を定義できない。
+
+なぜなら、
+
+「その y を生成した元が存在しない」から。
+
+● これが起きない条件
+surjective（全射）
+∀𝑦∈𝑆2,∃𝑥∈𝑆1 s.t.𝑓(𝑥)=𝑦
+
+つまり
+
+Im(𝑓)=𝑆2
+
+これを surjection と呼ぶ。
+
+③ 可逆になる条件
+
+関数が invertible になるのは：
+
+injective
+
+surjective
+
+両方を満たすとき。
+
+これを
+
+bijective
+
+
+（全単射）という。
+
+
+✏️ コラム：fibre（ファイバー）
+
+関数
+
+𝑓:𝑆1→𝑆2
+​
+
+
+に対して、
+
+ある𝑦∈𝑆2 の fibre は：
+
+𝑓−1(𝑦)={𝑥∈𝑆1∣𝑓(𝑥)=𝑦
+
+つまり
+
+「y に写る元の集合」
+
+collapse の正体
+
+injective でないとは：
+
+∣𝑓−1(𝑦)∣>1
+
+となる y が存在すること。
+
+つまり：
+
+ファイバーが複数要素を持つ
+
+ことが collapse。
+
+surjective でないとは
+
+ある y について
+
+𝑓−1(𝑦)=∅
+
+つまり：
+
+空ファイバーが存在する
+
+🧩 fibration（発展話）
+
+圏論や幾何では：
+
+各点の上に fibre がぶら下がっている
+
+空間が「層構造」になっている
+
+という見方をする。
+
+特に：
+
+𝑝: 𝐸→𝐵
+
+の形で、
+
+B の各点 b に fibre 𝑝−1(𝑏) がある。
+
+これを fibration と呼ぶ。
+
+直感的には：
+
+「空間を点ごとに束ねた構造」
+
+ベクトル束やトポロジーで重要。
+
+🔵 まとめ（ノート用）
+
+逆写像が存在しない理由は二つ：
+
+collapse（非単射）
+
+未到達（非全射）
+
+可逆であるためには：
+
+injective
++
+surjective
+=
+bijective
+
+
+ファイバーの観点から見ると：
+
+collapse = fibre が複数要素
+
+非全射 = 空 fibre が存在
+
+*
+圏論では
+単射な関数に対するものはmonie, monomorphism
+全射な関数に対するものはepic, epimorphism
+WIP
+```mermaid
+---
+config:
+layout: elk
+look: handDrawn
+---
+graph LR
+    subgraph S1["集合 S₁"]
+        a1["a"]
+    end
+    subgraph S2["集合 S₂"]
+        x1["x"]
+        y1["y"]
+    end
+    a1 --> x1
+    a1 --> y1
+```
+
+# 圏の定義
+
+圏（category）とは、4つ組
+
+$$
+\mathcal{C} = (O, A, \circ, \mathrm{id})
+$$
+
+からなる構造である。
+
+---
+
+## 1. 対象（Objects）
+
+- $O$ は対象（objects）の集まり。
+- 元を $X, Y, Z, W \in O$ と書く。
+
+---
+
+## 2. 射（Morphisms / Arrows）
+
+各対象 $X, Y \in O$ に対して、
+
+$$
+A(X,Y)
+$$
+
+を対象 $X$ から対象 $Y$ への射の集まりとする。
+
+射 $f \in A(X,Y)$ を
+
+- $f : X \to Y$
+- $X \xrightarrow{f} Y$
+
+と書く。
+
+すべての射をまとめて $A$ と書く。
+
+---
+
+## 3. 射の合成（Composition）
+
+任意の $X, Y, Z \in O$ に対して写像
+
+$$
+\circ_{X,Y,Z} :
+A(Y,Z) \times A(X,Y)
+\to
+A(X,Z)
+$$
+
+が定まっている。
+
+これは
+
+$$
+X \xrightarrow{f} Y
+\quad
+Y \xrightarrow{g} Z
+$$
+
+を受け取り、
+
+$$
+g \circ_{X,Y,Z}  f : X \to Z
+$$
+
+を与える。
+
+以下では
+$$
+g \circ_{X,Y,Z}
+$$
+添字X,Y,Zを省略して $\circ$ と書く。
+
+---
+
+## 4. 恒等射（Identity）
+
+各対象 $X \in O$ に対して、
+
+$$
+\mathrm{id}_X : X \to X
+$$
+
+が定まっている。
+
+---
+
+## 5. 公理
+
+### 結合律（Associativity）
+
+任意の
+
+$$
+X \xrightarrow{f} Y
+\quad
+Y \xrightarrow{g} Z
+\quad
+Z \xrightarrow{h} W
+$$
+
+に対して、
+
+$$
+h \circ (g \circ f)
+=
+(h \circ g) \circ f
+$$
+
+が成り立つ。
+
+---
+
+### 単位律（Unit Law）
+
+任意の $f : X \to Y$ に対して、
+
+$$
+\mathrm{id}_Y \circ f
+=
+f
+=
+f \circ \mathrm{id}_X
+$$
+
+が成り立つ。
